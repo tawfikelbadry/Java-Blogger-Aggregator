@@ -29,8 +29,7 @@ public class Role {
     
     private String name;
     
-    @ManyToMany
-    @JoinTable
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
     public int getId() {

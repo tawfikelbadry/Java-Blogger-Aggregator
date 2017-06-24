@@ -6,6 +6,8 @@
 package com.tawfik.blogger.aggregator.repository;
 
 import com.tawfik.blogger.aggregator.entity.Blog;
+import com.tawfik.blogger.aggregator.entity.User;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author tito
  */
 public interface BlogRepository extends JpaRepository<Blog,Integer>{
+    
+    public List<Blog> findByUser(User user);
     
 }

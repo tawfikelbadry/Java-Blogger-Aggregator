@@ -18,6 +18,7 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,8 +28,6 @@ import org.springframework.stereotype.Service;
 @Transactional
 @Service
 public class InitDBService {
-    
-    
 
     @Autowired
     private RoleRepository roleRepository;
@@ -54,31 +53,34 @@ public class InitDBService {
 
         User userAdmin = new User();
         userAdmin.setName("admin");
-        userAdmin.setPassword("admin");
+        userAdmin.setEmail("titoelbadry6@gmail.com");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        userAdmin.setPassword(encoder.encode("admin"));
+
+        userAdmin.setEnabled(true);
 
         ArrayList<Role> roles = new ArrayList();
         roles.add(roleUser);
         roles.add(roleAdmin);
-        
+
         userAdmin.setRoles(roles);
-        
+
         userRepository.save(userAdmin);
-        
-        
-        Blog blogJavavids=new Blog();
+
+        Blog blogJavavids = new Blog();
         blogJavavids.setName("java vids");
         blogJavavids.setUrl("http://feeds.feedburner.com/javavids?format=xml");
         blogJavavids.setUser(userAdmin);
         blogRepository.save(blogJavavids);
-        
-        Item item1=new Item();
+
+        Item item1 = new Item();
         item1.setBlog(blogJavavids);
         item1.setTitle("first");
         item1.setLink("http://www.javavids.com");
         item1.setPublishedDate(new Date());
         itemRepository.save(item1);
-        
-        Item item2=new Item();
+
+        Item item2 = new Item();
         item2.setBlog(blogJavavids);
         item2.setTitle("second");
         item2.setLink("http://www.javavids.com");

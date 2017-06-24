@@ -14,31 +14,11 @@
     <properties>
         <org.springframework.version>4.3.9.RELEASE</org.springframework.version>
         <apache-tiles>3.0.7</apache-tiles>
+        <spring-security-version>4.2.3.RELEASE</spring-security-version>
     </properties> 
     
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
-               <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
-        
-                <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>2.0</version>
-        </dependency>
-
-        
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-        </dependency>
-        
-        
         <!--common dbcp dependencies-->
         
         <dependency>
@@ -62,26 +42,15 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.3.1.Final</version>
-<!--            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.logging</groupId>
-                    <artifactId>jboss-logging</artifactId>
-                </exclusion>
-            </exclusions>-->
-            <exclusions>
-                <exclusion>
-                    <groupId>dom4j</groupId>
-                    <artifactId>dom4j</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-<!--        
-                <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.3.0.Final</version>
+        
+        <!--hibernate validators-->    
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.0.Beta2</version>
         </dependency>
-        -->
+
         <!--mysql dependency-->
         
         <dependency>
@@ -256,6 +225,8 @@
             <scope>provided</scope>
         </dependency>
         
+        
+        <!--jstl dependency-->   
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
@@ -288,8 +259,23 @@
             <version>${apache-tiles}</version>
         </dependency>
         
+        <!--spring security dependencies-->
         
-        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
         
     </dependencies>
 
@@ -313,8 +299,7 @@
                 </configuration>
             </plugin>
             
-            <!--jetty plugin
-                        
+            <!--jetty plugin -->            
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -322,9 +307,34 @@
                 <configuration>
                     <foo>bar</foo>
                 </configuration>
-            </plugin> -->
+            </plugin> 
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jsimone</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>8.0.30.2</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             
         </plugins> 
+       
     </build>
 
 </project>

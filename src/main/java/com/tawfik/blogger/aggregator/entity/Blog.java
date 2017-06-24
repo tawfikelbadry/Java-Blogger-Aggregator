@@ -6,12 +6,16 @@
 package com.tawfik.blogger.aggregator.entity;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
 
 /**
  *
@@ -25,15 +29,16 @@ public class Blog {
     @GeneratedValue
     private int id;
     
+    @URL
     private String url;
-    
+    @Size(min = 2,message = "name must be at least 2 letters")
     private String name;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     
     
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog",cascade = CascadeType.ALL)
     private List<Item> items;
     
     public int getId() {

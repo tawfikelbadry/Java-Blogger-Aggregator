@@ -4,18 +4,31 @@
     Author     : tito
 --%>
 
-<%@page import="org.springframework.beans.factory.xml.XmlBeanFactory"%>
-<%@page import="org.springframework.beans.factory.BeanFactory"%>
-<%@page import="org.springframework.core.io.Resource"%>
-<%@page import="org.springframework.core.io.ClassPathResource"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="../layout/taglib.jsp" %>
 
+<h1>Latest news from Java World</h1>
 
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>link</th>
+            <th>published Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${items}" var="item">
+        <tr>
+            <td>${item.id}</td>
+            <td>${item.title}</td>
+            <td>${item.link}</td>
+            <td>${item.publishedDate}</td>
+        </tr>
 
-<%
-//    Resource r = new ClassPathResource("applicationContext.xml");
-//    BeanFactory factory = new XmlBeanFactory(r);
+    </c:forEach>
+</tbody>
 
-%>
-
-hello from spring mvc
+</table>
